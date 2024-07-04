@@ -29,15 +29,25 @@ internal class Program
 
         Book book = new Book()
         {
-            Name = "Test",
-            SalePrice = 10,
-            CostPrice = 8,
-            GenreId = 1
+            Name = "Death of Ivan Illyich",
+            SalePrice = 5,
+            CostPrice = 2,
+            GenreId = 4
         };
 
-        Create(book);
+        //Create(book);
 
+        //Update(2, book);
 
+        //Console.WriteLine(GetBookById(2));
+
+        //var books = GetAllBooks();
+        //foreach (var item in books)
+        //{
+        //    Console.WriteLine(item);
+        //}
+
+        //DeleteBook(2);
     }
 
     static void Create(Genre genre)

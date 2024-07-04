@@ -13,6 +13,6 @@ public class Book
 
     public override string ToString()
     {
-        return $"{Id} - {Name} - {CostPrice} - {Genre}";
+        return $"{Id} - {Name} - {CostPrice} - {GenreId}";
     }
 }
