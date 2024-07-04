@@ -1,66 +1,147 @@
 ﻿using Task___04._07._2024.DAL;
 using Task___04._07._2024.Models;
 
-namespace Task___04._07._2024
+namespace Task___04._07._2024;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        //Genre genre = new Genre()
+        //{
+        //    Name = "SciFi"
+        //};
+
+        //Create(genre);
+
+        //Update(5,genre);
+
+        //DeleteGenre(1);
+
+        //Console.WriteLine(GetGenreById(3));
+
+
+        //var genres = GetAllGenres();
+        //foreach (var item in genres)
+        //{
+        //    Console.WriteLine(item);
+        //}
+
+        Book book = new Book()
         {
-            Genre genre = new Genre()
-            {
-                Name = "Sci-Fi"
-            };
+            Name = "Test",
+            SalePrice = 10,
+            CostPrice = 8,
+            GenreId = 1
+        };
 
-            //Create(genre);
-            //Delete(1);
-            //Console.WriteLine(GetById(3));
-            //var genres = GetAll();
-            //foreach (var item in genres)
-            //{
-            //    Console.WriteLine(item);
-            //}
+        Create(book);
 
+
+    }
+
+    static void Create(Genre genre)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.Genres.Add(genre);
+        dbContext.SaveChanges();
+    }
+    static void Create(Book book)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.Books.Add(book);
+        dbContext.SaveChanges();
+    }
+
+
+    static void Update(int id, Genre genre)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        var existGenre = dbContext.Genres.FirstOrDefault(x => x.Id == id);
+        if (existGenre is null)
+        {
+            throw new NullReferenceException();
         }
 
-        static void Create(Genre genre)
+        existGenre.Name = genre.Name;
+        dbContext.SaveChanges();
+    }
+    static void Update(int id, Book book)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        var existBook = dbContext.Books.FirstOrDefault(x => x.Id == id);
+        if (existBook is null)
         {
-            AppDbContext dbContext = new AppDbContext();
-            dbContext.Genres.Add(genre);
-            dbContext.SaveChanges();
+            throw new NullReferenceException();
         }
 
-        static Genre GetById(int id)
-        {
-            AppDbContext dbContext = new AppDbContext();
-            Genre wantedGenre = dbContext.Genres.FirstOrDefault(x => x.Id == id);
-            if (wantedGenre is null)
-            {
-                throw new NullReferenceException();
-            }
+        existBook.Name = book.Name;
+        existBook.CostPrice = book.CostPrice;
+        existBook.SalePrice = book.SalePrice;
+        existBook.GenreId = book.GenreId;
+        dbContext.SaveChanges();
+    }
 
-            return wantedGenre;
+    static Genre GetGenreById(int id)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        Genre wantedGenre = dbContext.Genres.FirstOrDefault(x => x.Id == id);
+        if (wantedGenre is null)
+        {
+            throw new NullReferenceException();
         }
 
-
-        static List<Genre> GetAll()
+        return wantedGenre;
+    }
+    static Book GetBookById(int id)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        Book wantedBook = dbContext.Books.FirstOrDefault(x => x.Id == id);
+        if (wantedBook is null)
         {
-            AppDbContext dbContext = new AppDbContext();
-            return dbContext.Genres.ToList();
+            throw new NullReferenceException();
         }
 
+        return wantedBook;
+    }
 
-        static void Delete(int id)
+    static List<Genre> GetAllGenres()
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.Genres.ToList();
+    }
+    static List<Book> GetAllBooks()
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.Books.ToList();
+    }
+
+
+
+
+    static void DeleteGenre(int id)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        Genre wantedGenre = dbContext.Genres.FirstOrDefault(x => x.Id == id);
+        if (wantedGenre is null)
         {
-            AppDbContext dbContext = new AppDbContext();
-            Genre wantedGenre = dbContext.Genres.FirstOrDefault(x => x.Id == id);
-            if (wantedGenre is null)
-            {
-                throw new NullReferenceException();
-            }
-
-            dbContext.Genres.Remove(wantedGenre);
-            dbContext.SaveChanges();
+            throw new NullReferenceException();
         }
+
+        dbContext.Genres.Remove(wantedGenre);
+        dbContext.SaveChanges();
+    }
+
+    static void DeleteBook(int id)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        Book wantedBook = dbContext.Books.FirstOrDefault(x => x.Id == id);
+        if (wantedBook is null)
+        {
+            throw new NullReferenceException();
+        }
+
+        dbContext.Books.Remove(wantedBook);
+        dbContext.SaveChanges();
     }
 }
